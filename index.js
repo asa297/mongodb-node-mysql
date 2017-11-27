@@ -14,7 +14,7 @@ bluebird.promisifyAll(MongoClient);
 bluebird.promisifyAll(request);
 bluebird.promisifyAll(Promise);
 var mysqlPool = mysql.createPool({
-    host     : '172.104.167.197',
+    host     : '104.167.197',
     user     : 'root',
     password : 'my-secret-pw',
     database : 'tutordb'
