@@ -79,22 +79,32 @@ app.get('/get_course_chat',function(req,res) {
 		db.collection('course_chat').find({course_id : course_id1}).forEach(function(doc){
 			var user_id = doc.user_id;
 			var txt = doc.chat_text;
+			
 			request('http://localhost:4000/user/'+user_id+'', function (error, response, body) {
 			/*if (!error && response.statusCode == 200) {
 		
         console.log(body) // Print the google web page.
 			}*/
 			
-			var array1 = [ ] ;  
+			 
 	// console.log("body = " + body )
 //console.log("[" + JSON.stringify(doc) +"]");
-array1[0] = JSON.parse(body);
-array1[1] = txt  ;
-		console.log(array1 );
-	
-
-
-
+			console.log('body = ' + body);
+			console.log("////");
+			var jsonData = JSON.parse(body);
+			var conuter = jsonData[0];
+			console.log('fname = ');
+			console.log(conuter.fname);
+			var o = {}
+			var key = 'user';
+			o[key] = [];
+			var data = {
+    firstname: conuter.fname,
+    lastname: conuter.lname,
+	chat_text: doc.chat_text
+	};
+	o[key].push(data);
+	console.log(JSON.stringify(o));
 })	
 			
 		})
