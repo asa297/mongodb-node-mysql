@@ -71,8 +71,9 @@ app.get('/get_course_chat',function(req,res) {
 
 app.get('/get_course_chat',function(req,res) {
 	res.send('sda');
-	
-	  
+			var o = {}
+			var key = 'user';
+			o[key] = [];
 	  //var course_id1 = req.params.courseid;
 	  var course_id1 = 1511693785921;
 	  MongoClient.connect(url,function(req,db){
@@ -89,15 +90,14 @@ app.get('/get_course_chat',function(req,res) {
 			 
 	// console.log("body = " + body )
 //console.log("[" + JSON.stringify(doc) +"]");
-			console.log('body = ' + body);
-			console.log("////");
+			//console.log('body = ' + body);
+			//console.log("////");
 			var jsonData = JSON.parse(body);
 			var conuter = jsonData[0];
-			console.log('fname = ');
-			console.log(conuter.fname);
-			var o = {}
-			var key = 'user';
-			o[key] = [];
+			//console.log('fname = ');
+			//console.log(conuter.fname);
+
+			
 			var data = {
     firstname: conuter.fname,
     lastname: conuter.lname,
