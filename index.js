@@ -9,17 +9,14 @@ var bluebird = require('bluebird');
 var request = require('request');
 var mm = require('underscore');
 var Promise = require('promise');
-<<<<<<< HEAD
 var rp = require('request-promise');
 bluebird.promisifyAll(MongoClient);
 bluebird.promisifyAll(request);
 bluebird.promisifyAll(Promise);
-=======
->>>>>>> 5545f4af02aad3a7882eafc9c5217a8c18067004
 var mysqlPool = mysql.createPool({
-    host     : 'xxxxxxxxx',
+    host     : '172.104.167.197',
     user     : 'root',
-    password : 'xxxxxxx',
+    password : 'my-secret-pw',
     database : 'tutordb'
 });
 /*
@@ -88,7 +85,7 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 				console.log('////////////////////////////////////////////////////////////')
 			//console.log(JSON.stringify(rows))	
 				//connection.release();
-				res.end();
+				
 			})
 			//console.log('end2')
 			//res.json(o)
@@ -96,21 +93,25 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 	  //console.log('end1')
 	  })
 	  //console.log('end')
+	  setTimeout(function() {
+			res.json(o)
+	  }, 1000);
 	})
 	
 })
 
-<<<<<<< HEAD
+/*
+var D = function() {
+
+    return new Promise(function(resolve, reject) {
+        var result = 'D is done'
+        console.log(result)
+        resolve(result);
+    })
+}
+*/
 /*
 app.get('/get_course_chat/:courseid',function(req,res) {
-=======
-app.get('/get_course_chat/:courseid',function(req,res) {
-
-
-
-
-	
->>>>>>> 5545f4af02aad3a7882eafc9c5217a8c18067004
 	//res.send('sda');
 			var o = {}
 			var key = 'user';
@@ -118,7 +119,6 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 	  var course_id1 = req.params.courseid;
 	  
 	  //var course_id1 = 1511693785921;
-<<<<<<< HEAD
 	 // console.log(course_id1)
 	  //res.send(course_id1);
 	  MongoClient.connect(url,function(req,db){
@@ -128,28 +128,10 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 			var txt = doc.chat_text;
 			//console.log('in mongo2')
 			console.log('ts = ' + doc.chat_ts)
-=======
-	  console.log(course_id1)
-	  //res.send(course_id1);
-	  MongoClient.connect(url,function(req,db){
-		console.log('in mongo1')
-		db.collection('course_chat').find({course_id : parseInt(course_id1) }).sort({ "$natural": 1 }).forEach(function(doc){
-			var user_id = doc.user_id;
-			var txt = doc.chat_text;
-			console.log('in mongo2')
-
-
-
-
-
-
-
->>>>>>> 5545f4af02aad3a7882eafc9c5217a8c18067004
 
 			request('http://localhost:4000/user/'+user_id+'', function (error, response, body) {
 				var jsonData = JSON.parse(body);
 				var conuter = jsonData[0];
-<<<<<<< HEAD
 				console.log('fname = ');
 				console.log(conuter.fname);
 				console.log('lname = ');
@@ -165,16 +147,6 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 					lastname: conuter.lname,
 					chat_text: doc.chat_text,
 					chat_ts : doc.chat_ts
-=======
-				//console.log('fname = ');
-				//console.log(conuter.fname);
-
-				console.log('in mongo3')
-				var data = {
-					firstname: conuter.fname,
-					lastname: conuter.lname,
-					chat_text: doc.chat_text
->>>>>>> 5545f4af02aad3a7882eafc9c5217a8c18067004
 				};
 					o[key].push(data);
 					console.log(JSON.stringify(o));
@@ -193,25 +165,25 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 	
 })
 */
-
+/*
 app.get('/get_course_chat/:courseid',function(req,res) {
 var course_id1 = req.params.courseid;	
-/*
+
 client()
 .then(A(course_id1))
 .then(B(course_id1))
 .then(C)
 .then(D)
-*/
+
 
 
 
 res.end();
 })
+*/
 
 
-
-
+/*
 app.get('/user/:user_id',function(req,res) {
 	mysqlPool.getConnection(function(err, connection) {
 	  if(err) throw err;
@@ -225,7 +197,7 @@ app.get('/user/:user_id',function(req,res) {
 	})
 });
 
-
+*/
 /*
 var client = MongoClient.connectAsync(url)
     .then(function(db) {
