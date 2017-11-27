@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "expresss": "0.0.0",
+    "mongodb": "^2.2.33",
     "mysql": "^2.15.0",
+    "promise": "^8.0.1",
     "request": "^2.83.0"
   }
 }

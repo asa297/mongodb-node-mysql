@@ -7,6 +7,7 @@ var url = 'mongodb://172.104.167.197:27017/tutor';
 var mysql = require('mysql');
 var request = require('request');
 var mm = require('underscore');
+var Promise = require('promise');
 var mysqlPool = mysql.createPool({
     host     : '172.104.167.197',
     user     : 'root',
@@ -69,48 +70,61 @@ app.get('/get_course_chat',function(req,res) {
 })*/
 
 
-app.get('/get_course_chat',function(req,res) {
-	res.send('sda');
+app.get('/get_course_chat/:courseid',function(req,res) {
+
+
+
+
+	
+	//res.send('sda');
 			var o = {}
 			var key = 'user';
 			o[key] = [];
-	  //var course_id1 = req.params.courseid;
-	  var course_id1 = 1511693785921;
+	  var course_id1 = req.params.courseid;
+	  
+	  //var course_id1 = 1511693785921;
+	  console.log(course_id1)
+	  //res.send(course_id1);
 	  MongoClient.connect(url,function(req,db){
-		db.collection('course_chat').find({course_id : course_id1}).forEach(function(doc){
+		console.log('in mongo1')
+		db.collection('course_chat').find({course_id : parseInt(course_id1) }).sort({ "$natural": 1 }).forEach(function(doc){
 			var user_id = doc.user_id;
 			var txt = doc.chat_text;
-			
+			console.log('in mongo2')
+
+
+
+
+
+
+
+
 			request('http://localhost:4000/user/'+user_id+'', function (error, response, body) {
-			/*if (!error && response.statusCode == 200) {
-		
-        console.log(body) // Print the google web page.
-			}*/
-			
-			 
-	// console.log("body = " + body )
-//console.log("[" + JSON.stringify(doc) +"]");
-			//console.log('body = ' + body);
-			//console.log("////");
-			var jsonData = JSON.parse(body);
-			var conuter = jsonData[0];
-			//console.log('fname = ');
-			//console.log(conuter.fname);
+				var jsonData = JSON.parse(body);
+				var conuter = jsonData[0];
+				//console.log('fname = ');
+				//console.log(conuter.fname);
+
+				console.log('in mongo3')
+				var data = {
+					firstname: conuter.fname,
+					lastname: conuter.lname,
+					chat_text: doc.chat_text
+				};
+					o[key].push(data);
+					console.log(JSON.stringify(o));
+	
+				})	
+
+
 
 			
-			var data = {
-    firstname: conuter.fname,
-    lastname: conuter.lname,
-	chat_text: doc.chat_text
-	};
-	o[key].push(data);
-	console.log(JSON.stringify(o));
-})	
-			
-		})
+			})
 	  
 	  })
-	  
+	  console.log('in mongo4')
+	
+	res.json(o)  
 	
 })
 
