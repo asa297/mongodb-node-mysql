@@ -9,12 +9,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "bluebird": "^3.5.1",
+=======
+>>>>>>> 5545f4af02aad3a7882eafc9c5217a8c18067004
     "expresss": "0.0.0",
     "mongodb": "^2.2.33",
     "mysql": "^2.15.0",
     "promise": "^8.0.1",
+<<<<<<< HEAD
     "request": "^2.83.0",
     "request-promise": "^4.2.2"
+=======
+    "request": "^2.83.0"
+>>>>>>> 5545f4af02aad3a7882eafc9c5217a8c18067004
   }
 }
