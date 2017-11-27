@@ -14,7 +14,7 @@ bluebird.promisifyAll(MongoClient);
 bluebird.promisifyAll(request);
 bluebird.promisifyAll(Promise);
 var mysqlPool = mysql.createPool({
-    host     : '.104.167.197',
+    host     : '172.104.167.197',
     user     : 'root',
     password : 'my-secret-pw',
     database : 'tutordb'
@@ -63,10 +63,10 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 	  //var course_id1 = 1511693785921;
 	  MongoClient.connect(url,function(req,db){
 		  //console.log(3)
-		db.collection('course_chat').find({course_id : Number.parseInt(course_id1)}).sort({ "chat_ts": 1 }).forEach(function(doc){
+		db.collection('course_chat').find({course_id : Number.parseInt(course_id1)}).sort({ "chat_ts": -1 }).limit(10).forEach(function(doc){
 			//console.log(4)
 			var user_id = doc.user_id;
-			var query = "SELECT u.fname , u.lname  FROM user u WHERE u.user_id =  "+user_id+" ";
+			var query = "SELECT u.fname , u.lname , u.user_img FROM user u WHERE u.user_id =  "+user_id+" ";
 			connection.query(query, function(err, rows){
 			var jsonData = JSON.parse(JSON.stringify(rows));
 			var counter = jsonData[0];
@@ -75,16 +75,18 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 			//console.log(jsonData)
 
 				var data = {
+					user_id : doc.user_id,
 					firstname: counter.fname,
 					lastname: counter.lname,
+					user_img : counter.user_img,
 					chat_text: doc.chat_text,
 					chat_ts : doc.chat_ts
 				};
 					o[key].push(data);
-				console.log(JSON.stringify(o))
-				console.log('////////////////////////////////////////////////////////////')
-			//console.log(JSON.stringify(rows))	
-				//connection.release();
+				//console.log(JSON.stringify(o))
+				//console.log('////////////////////////////////////////////////////////////')
+	
+				
 				
 			})
 			//console.log('end2')
@@ -94,11 +96,39 @@ app.get('/get_course_chat/:courseid',function(req,res) {
 	  })
 	  //console.log('end')
 	  setTimeout(function() {
+		connection.release();
 			res.json(o)
+			res.end()
 	  }, 1000);
 	})
 	
 })
+
+
+app.post('/insert_chat_mongo',function(req,res) {
+	var course_id = req.body.course_id
+	var user_id = req.body.user_id
+	var chat_text = req.body.chat_text
+	var chat_ts = req.body.chat_ts
+
+	MongoClient.connect(url, function(err, db) {
+		if (err) throw err;
+		var myobj = { 
+			course_id: course_id,
+			user_id: user_id,
+			chat_text: chat_text,
+			chat_ts: chat_ts
+		};
+		db.collection("course_chat").insertOne(myobj, function(err, res) {
+		  if (err) throw err;
+		  console.log("1 document inserted");
+		  db.close();
+		  res.end();
+		});
+	  });
+
+})
+
 
 /*
 var D = function() {
