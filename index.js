@@ -17,9 +17,9 @@ bluebird.promisifyAll(Promise);
 =======
 >>>>>>> 5545f4af02aad3a7882eafc9c5217a8c18067004
 var mysqlPool = mysql.createPool({
-    host     : '172.104.167.197',
+    host     : 'xxxxxxxxx',
     user     : 'root',
-    password : 'my-secret-pw',
+    password : 'xxxxxxx',
     database : 'tutordb'
 });
 /*
